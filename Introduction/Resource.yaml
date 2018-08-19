@@ -1,0 +1,12 @@
+Resources:
+  Ec2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      ImageId: ami-01da99628f381e50a
+      KeyName: SingaPore
+      Tags:
+        - Key: Name
+          Value: DB-Server
+        - Key: Type
+          Value: MYSQL 

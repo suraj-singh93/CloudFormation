@@ -1,0 +1,61 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Parameters:
+  KeyName:
+    Description: Name of SSH Key to used
+    Type: 'AWS::EC2::KeyPair::KeyName'
+
+  DB:
+    Default: admin
+    NoEcho: true
+    Description: Database Name
+    Type: String
+    MinLength: 1
+    MaxLength: 16
+    AllowedPattern: "[a-zA-Z][a-zA-Z0-9]*"
+
+Mappings:
+  RegionMap:
+    ap-southeast-1:
+      AMI: ami-01da99628f381e50a
+    us-east-1:
+      AMI: ami-04681a1dbd79675a5
+
+Resources:
+  Ec2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      ImageId: !FindInMap
+        - RegionMap
+        - !Ref 'AWS::Region'
+        - AMI
+      KeyName: !Ref KeyName
+      Tags:
+        - Key: Name
+          Value: DB-Server
+        - Key: Type
+          Value: dbTYPE
+      SecurityGroups:
+        - !Ref MySecurityGroup
+
+
+  MySecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties: 
+      GroupName: SecurityGroup1
+      GroupDescription: This is SecurityGroup1
+      SecurityGroupIngress:
+        - CidrIp: 165.225.106.81/32
+          Description: SSH
+          FromPort: 22
+          IpProtocol: TCP
+          ToPort: 22
+        - CidrIp: 165.225.106.81/32
+          Description: ICMP
+          FromPort: 0
+          IpProtocol: TCP
+          ToPort: 65535
+      Tags:
+        - Key: Name
+          Value: SecurityGroup_Singapore
