@@ -45,16 +45,16 @@ Resources:
       GroupName: SecurityGroup1
       GroupDescription: This is SecurityGroup1
       SecurityGroupIngress:
-        - CidrIp: 165.225.106.81/32
+        - CidrIp: 0.0.0.0/0
           Description: SSH
           FromPort: 22
           IpProtocol: TCP
           ToPort: 22
-        - CidrIp: 165.225.106.81/32
+        - CidrIp: 0.0.0.0/0
           Description: ICMP
-          FromPort: 0
-          IpProtocol: TCP
-          ToPort: 65535
+          FromPort: -1
+          IpProtocol: ICMP
+          ToPort: -1
       Tags:
         - Key: Name
           Value: !Join ['-', [ SecurityGroup, !Ref 'AWS::Region']]
