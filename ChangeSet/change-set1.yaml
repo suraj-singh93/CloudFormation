@@ -48,7 +48,7 @@ Resources:
       GroupName: SecurityGroup1
       GroupDescription: This is SecurityGroup1
       SecurityGroupIngress:
-        - CidrIp: 165.225.106.81/32
+        - CidrIp: 0.0.0.0/0
           Description: SSH
           FromPort: 22
           IpProtocol: TCP
